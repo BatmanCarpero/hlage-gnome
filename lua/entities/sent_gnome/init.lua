@@ -19,6 +19,17 @@ function ENT:Initialize()
     self:SetUseType(SIMPLE_USE)
 
     self:SetMood(100)
+
+    local gnome = self
+    hook.Add("PlayerDeath", "GnomeChompskiKill_" .. tostring(self:EntIndex()), function(victim, inflictor, attacker)
+        if not IsValid(gnome) then return end
+        if inflictor == gnome or attacker == gnome then
+            -- Enviar mensaje a todos los clientes para reproducir el sonido
+            net.Start("GnomeChompskiKill")
+            net.WriteEntity(gnome)
+            net.Broadcast()
+        end
+    end)
 end
 
 function ENT:Use(ply)
@@ -26,10 +37,18 @@ function ENT:Use(ply)
     if not IsValid(ply) then return end
     if not ply:IsPlayer() then return end
 
-    -- Dar la SWEP otra vez
+    local mood = self:GetMood()
+
     ply:Give("weapon_gnome")
 
+    local wep = ply:GetWeapon("weapon_gnome")
+    if IsValid(wep) then
+        wep:SetMood(mood)
+    end
+
     ply:ChatPrint("Has recogido al gnomo.")
+
+    hook.Remove("PlayerDeath", "GnomeChompskiKill_" .. tostring(self:EntIndex()))
 
     self:Remove()
 end

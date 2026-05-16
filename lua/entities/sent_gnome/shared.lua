@@ -1,7 +1,7 @@
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
 
-ENT.PrintName = "Chompski"
+ENT.PrintName = "Gnome Chompski"
 ENT.Author = "BatmanCarpero"
 
 ENT.Spawnable = false

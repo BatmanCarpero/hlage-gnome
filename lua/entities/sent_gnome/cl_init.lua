@@ -1,5 +1,12 @@
 include("shared.lua")
 
+net.Receive("GnomeChompskiKill", function()
+    local gnome = net.ReadEntity()
+    if IsValid(gnome) then
+        surface.PlaySound("red-gnome/hahe.wav")
+    end
+end)
+
 function ENT:Draw()
 
     self:DrawModel()

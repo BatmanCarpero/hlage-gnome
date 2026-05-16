@@ -18,3 +18,7 @@ SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "none"
 
 SWEP.Secondary = SWEP.Primary
+
+function SWEP:SetupDataTables()
+    self:NetworkVar("Int", 0, "Mood")
+end
