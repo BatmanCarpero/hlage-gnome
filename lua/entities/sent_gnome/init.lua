@@ -2,6 +2,14 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include("shared.lua")
 
+util.AddNetworkString("GnomeChompskiKill")
+
+hook.Add("GetDeathNoticeEntityName", "GnomeChompskiDeathName", function(name)
+    if name == "sent_gnome" then
+        return "Gnome Chompski"
+    end
+end)
+
 function ENT:Initialize()
 
     self:SetModel("models/props_junk/gnome.mdl")
@@ -24,7 +32,6 @@ function ENT:Initialize()
     hook.Add("PlayerDeath", "GnomeChompskiKill_" .. tostring(self:EntIndex()), function(victim, inflictor, attacker)
         if not IsValid(gnome) then return end
         if inflictor == gnome or attacker == gnome then
-            -- Enviar mensaje a todos los clientes para reproducir el sonido
             net.Start("GnomeChompskiKill")
             net.WriteEntity(gnome)
             net.Broadcast()

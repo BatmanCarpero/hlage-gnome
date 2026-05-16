@@ -1,7 +1,7 @@
 AddCSLuaFile()
 include("shared.lua")
 
-local GNOME_MAX_DIST = 50
+local GNOME_MAX_DIST = 35
 
 function SWEP:PrimaryAttack()
 
@@ -26,10 +26,9 @@ function SWEP:PrimaryAttack()
     ent:Spawn()
     ent:SetMood(self:GetMood())
 
-    -- Hacer que el gnomo mire hacia el jugador
-    local dirToPlayer = (ply:GetPos() - ent:GetPos()):Normalize()
+    local dirToPlayer   = (ply:GetPos() - ent:GetPos()):GetNormalized()
     local angleToPlayer = dirToPlayer:Angle()
-    ent:SetAngles(angleToPlayer)
+    ent:SetAngles(Angle(0, angleToPlayer.y, 0))
 
     self:Remove()
 
